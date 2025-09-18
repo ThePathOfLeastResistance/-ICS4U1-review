@@ -176,11 +176,49 @@ while gamEnd == False:
 '''
 
 import pandas as pd
+import random    
+import os 
+
+gameOn = True
+
 
 while gameOn == True:
+    player1UserName = input("Input the user name for the first player: ")
+    player2UserName = input("Input the user name for the second player: ")
     
+    
+    df = pd.read_csv('quiz_questions.csv')
+    listOfCategories = df['category'].unique()
+    
+    # print(df.head())
+    # print(listOfCategories)
+    lengthOfCategories = len(listOfCategories)
+    numOfCategories = int(input(f'How many categories do you want to choose from (1 - {lengthOfCategories}): '))
+    os.system('cls' if os.name == 'nt' else 'clear')
+    
+    
+    numOfQuesions = int(input("Ask them how many questions they wish to have asked: "))
+    
+    
+    
+    sampleCategories = random.sample(range(0, lengthOfCategories), numOfCategories)
+    os.system('cls' if os.name == 'nt' else 'clear')
 
-df = pd.read_csv('quiz_questions.csv')
-a = df['category'].unique()
-print(sorted(a))
+    
+    chosenCategories = []
+    
+    
+    print("Here are your Chocies: ")
+    for i in sampleCategories:
+        oneCategroy = listOfCategories[i]
+        print(oneCategroy)
+        chosenCategories.append(oneCategroy)
+    
+    listOfQuestions = df[df['category'].isin(chosenCategories)]
+    # print(listOfQuestions)
+    
+    sampleQuestionsIndex = random.sample(range(0, len(listOfQuestions)), numOfQuesions)
+    input("\n Enter To Continue")
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 
