@@ -5,8 +5,6 @@ Description: The code for an assignment in a cs class
 '''
 
 
-
-
 ''''
 Create a small console game where the program will choose a random number and the player must try and guess the number (10 marks)
         If the guess is too low, tell the user to guess higher and vice versa
@@ -16,18 +14,21 @@ Create a small console game where the program will choose a random number and th
     '''
 
 
-
-
 ''' 
 import random
 
+#this loop will make sure the game continues until the person ends it
 gamEnd = False
 while gamEnd == False:
+    #we generate the random number
     ranNum = random.randint(1, 10)
     # print(f"backend - number is {ranNum}")
     rigAnw = False
+    #this loop will run until the user guess the right answer.
     while rigAnw == False:
+        #here is where we get the user to gess.
         useGus = int(input("Guess the number, its 1 - 10: "))
+        #The logic to compare the answer from the user and right one and respond depending on it.
         if useGus == ranNum:
             newsta = input("YOU GUESSED THE RIGHT NUMBER, do you want to contine playing? Say 'Yes' to continue, and 'No' to stop: ")
             rigAnw = True
@@ -46,7 +47,7 @@ while gamEnd == False:
     Create a console version of the game hangman (split the string into a list of characters) (20 marks)
 '''
 
-
+#the interface that will be logged on the console to show the progression of the handman
 hanlis= ['''
   +---+
   |   |
@@ -105,6 +106,7 @@ print("hello")
 os.system('cls' if os.name=='nt' else 'clear')
 
 
+#a function to check if there is still any letters that have not been guessed.
 def checkForMis(list):
     misCou = 0
     for i in list:
@@ -117,7 +119,9 @@ def checkForMis(list):
         
 gamEnd = False
 while gamEnd == False:
+    #get one person to enter in the keyword
     wordAns = input("Eneter the word you want the other person to guess: ")
+    #clear the console
     os.system('cls' if os.name=='nt' else 'clear')
     worLis = list(wordAns)
     print(worLis)
@@ -130,13 +134,16 @@ while gamEnd == False:
     guslis = []
     
     while rigAnw == False:
+        
+        #The logic for letting the user guess and checking if the one already been guessed, right or wrong.
+        
         useGus = input("Guess the letter: ").strip().lower()
         length = len(worLis)
         corGus = []
         guealr = False
         for i in range(len(guslis)):
             if guslis[i] == useGus:
-                print("You already guessed this number before!!:  ")
+                print("You already guessed this letter before!!:  ")
                 guealr = True
             
         if guealr == False:
@@ -183,6 +190,7 @@ gameOn = True
 
 #issues: since the program does not know how many number is in each catergory, the user can choose only 1 category that only has 5 questions, and want to be asked 20 questions.
 
+#based on the choosen category, and the number of questions they wanted to be asked.
 def makeQuestionList(df, numOfQuesions, categories):
     #this is not super efficint since it quries the df every time instead of just once.
     # print('here is the catergory')
@@ -194,6 +202,7 @@ def makeQuestionList(df, numOfQuesions, categories):
     return listOfQuestions.sample(numOfQuesions)
 
 while gameOn == True:
+    #the start of the game to get the user names and score, read and prase the csv.
     player1UserName = input("Input the user name for the first player: ")
     player1Score = 0
     player2UserName = input("Input the user name for the second player: ")
@@ -222,6 +231,7 @@ while gameOn == True:
     input("\n Enter To Continue")
     os.system('cls' if os.name == 'nt' else 'clear')
     
+    #this is the section that ask the question based on the options they choose from before
     randomCategory = random.randint(0, numOfCategories)
     questionList = makeQuestionList(df, numOfQuesions, chosenCategories[randomCategory-1])
     for i in range(0, numOfQuesions, 2):
