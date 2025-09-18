@@ -189,7 +189,7 @@ def makeQuestionList(df, numOfQuesions, categories):
     # print(categories)
     # print(numOfQuesions)
     listOfQuestions = df[df['category'] == categories]
-    print(listOfQuestions)
+    # print(listOfQuestions)
 
     return listOfQuestions.sample(numOfQuesions)
 
@@ -223,16 +223,56 @@ while gameOn == True:
     os.system('cls' if os.name == 'nt' else 'clear')
     
     randomCategory = random.randint(0, numOfCategories)
-    makeQuestionList(df, numOfQuesions, chosenCategories[randomCategory])
+    questionList = makeQuestionList(df, numOfQuesions, chosenCategories[randomCategory-1])
     for i in range(0, numOfQuesions, 2):
-        print(i)
     
         print(f'{player1UserName} Score: {player1Score}')
         print(f'{player2UserName} Score: {player2Score}')
+        print("\n\n-------------")
+        questionOne = questionList.iloc[i]
+        print(f'{player1UserName}')
+        print(f'Question: {questionOne["question"]}')
+        print(f'Category: {questionOne["category"]}')
+        print(f'Difficulty: {questionOne["difficulty"]}')
         
-        print(f'{player1Score} Your Question')
-        print(f'Question:')
+        answerToOne = input("Enter your Guess, True or False?: ").strip().lower()
 
+        if answerToOne == str(questionOne["correct_answer"]).strip().lower():
+            player1Score += 1 
+            print("You got it right!!!")
+        else:
+            print("You got it wrong")
+        
+        input('Presss Enter to Continue')
+        os.system("cls" if os.name == 'nt' else 'clear')
+        
+        print(f'{player1UserName} Score: {player1Score}')
+        print(f'{player2UserName} Score: {player2Score}')
+        print("\n\n-------------")
+        questionTwo = questionList.iloc[i + 1]
+        print(f'{player2UserName}')
+        print(f'Question: {questionTwo["question"]}')
+        print(f'Category: {questionTwo["category"]}')
+        print(f'Difficulty: {questionTwo["difficulty"]}')
+        
+        answerToTwo = input("Enter your Guess, True or False?: ").strip().lower()
+
+        if answerToTwo == str(questionTwo["correct_answer"]).strip().lower():
+            player2Score += 1 
+            print("You got it right!!!")
+        else:
+            print("You got it wrong")
+            
+        input('Presss Enter to Continue')
+        os.system("cls" if os.name == 'nt' else 'clear')
     
+    if player1Score > player2Score:
+        print(F'{player1UserName} Won!!!')
+    if player1Score < player2Score:
+        print(F'{player2UserName} Won!!!')
+    else:
+        print(f'It was a TIE!!!')
+    
+    gameOn = True if input("Want to continue playing (Yes or NO): ").strip().lower() == 'yes' else False
 
 
