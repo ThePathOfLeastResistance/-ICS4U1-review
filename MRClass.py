@@ -181,11 +181,23 @@ import os
 
 gameOn = True
 
+#issues: since the program does not know how many number is in each catergory, the user can choose only 1 category that only has 5 questions, and want to be asked 20 questions.
+
+def makeQuestionList(df, numOfQuesions, categories):
+    #this is not super efficint since it quries the df every time instead of just once.
+    # print('here is the catergory')
+    # print(categories)
+    # print(numOfQuesions)
+    listOfQuestions = df[df['category'] == categories]
+    print(listOfQuestions)
+
+    return listOfQuestions.sample(numOfQuesions)
 
 while gameOn == True:
     player1UserName = input("Input the user name for the first player: ")
+    player1Score = 0
     player2UserName = input("Input the user name for the second player: ")
-    
+    player2Score = 0
     
     df = pd.read_csv('quiz_questions.csv')
     listOfCategories = df['category'].unique()
@@ -194,19 +206,11 @@ while gameOn == True:
     # print(listOfCategories)
     lengthOfCategories = len(listOfCategories)
     numOfCategories = int(input(f'How many categories do you want to choose from (1 - {lengthOfCategories}): '))
-    os.system('cls' if os.name == 'nt' else 'clear')
-    
-    
-    numOfQuesions = int(input("Ask them how many questions they wish to have asked: "))
-    
-    
-    
+    numOfQuesions = int(input("Ask them how many questions they wish to have asked: ")) * 2
     sampleCategories = random.sample(range(0, lengthOfCategories), numOfCategories)
     os.system('cls' if os.name == 'nt' else 'clear')
 
-    
     chosenCategories = []
-    
     
     print("Here are your Chocies: ")
     for i in sampleCategories:
@@ -214,11 +218,21 @@ while gameOn == True:
         print(oneCategroy)
         chosenCategories.append(oneCategroy)
     
-    listOfQuestions = df[df['category'].isin(chosenCategories)]
     # print(listOfQuestions)
-    
-    sampleQuestionsIndex = random.sample(range(0, len(listOfQuestions)), numOfQuesions)
     input("\n Enter To Continue")
     os.system('cls' if os.name == 'nt' else 'clear')
+    
+    randomCategory = random.randint(0, numOfCategories)
+    makeQuestionList(df, numOfQuesions, chosenCategories[randomCategory])
+    for i in range(0, numOfQuesions, 2):
+        print(i)
+    
+        print(f'{player1UserName} Score: {player1Score}')
+        print(f'{player2UserName} Score: {player2Score}')
+        
+        print(f'{player1Score} Your Question')
+        print(f'Question:')
+
+    
 
 
