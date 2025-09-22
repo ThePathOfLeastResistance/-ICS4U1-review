@@ -25,6 +25,7 @@ for i in table[rowRequest-1]:
     sum += i
 print(f'The sum of all the values in that row is {sum}')'''
 
+'''
 #2
 #Create a user defined 2D list and sum a column of their choice
 
@@ -38,3 +39,29 @@ for i in range(0, len(table)):
         sum += table[i][columnRequest]
             
 print(f'The sum of all the column in that row is {sum}')
+'''
+
+#Create a user defined 2D list and find the smallest prime in that 2D list
+#Create a user defined 2D list and find the largest prime in that 2D list
+
+
+from sympy import * 
+
+smallestPrime = table[0][0]
+
+for i in table:
+    for k in i:
+        if isprime(k):
+            if smallestPrime > k:
+                smallestPrime = k
+                
+print(f'The smallest prime number is {smallestPrime}')
+
+biggestPrime = table[0][0]
+for i in table:
+    for k in i:
+        if isprime(k):
+            if biggestPrime < k:
+                biggestPrime = k
+                
+print(f'The smallest prime number is {biggestPrime}')
