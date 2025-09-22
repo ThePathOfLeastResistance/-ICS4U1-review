@@ -41,6 +41,7 @@ for i in range(0, len(table)):
 print(f'The sum of all the column in that row is {sum}')
 '''
 
+'''
 #Create a user defined 2D list and find the smallest prime in that 2D list
 #Create a user defined 2D list and find the largest prime in that 2D list
 
@@ -65,3 +66,23 @@ for i in table:
                 biggestPrime = k
                 
 print(f'The smallest prime number is {biggestPrime}')
+'''
+
+#Create a user defined 2D list and find the largest column by sum
+#Create a user defined 2D list and find the smallest column by sum 
+
+largestColumn = 0
+largestIndex = 0 
+Index = 0 
+
+for i in table:
+    Index += 1
+    rowSum = 0
+    for k in i:
+        rowSum += k
+    #Just change the var name to match and the > to a < sign
+    if rowSum > largestColumn:
+        largestIndex = Index
+        largestColumn = rowSum
+
+print(f'The largest column is {largestIndex}')
