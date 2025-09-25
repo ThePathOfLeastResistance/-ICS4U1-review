@@ -97,10 +97,12 @@ def m_addition(m1, m2):
       m_row = []
       for column in range(0, len(m1[row])):
         total = m1[row][column] + m2[row][column]
-        m_row.append[total]
-      m_sum.append[m_row]
+        print(f'here is the m_row: {m_row}')
+        print(f'here is the total: {total}')
+        m_row.append(total)
+      m_sum.append(m_row)
   else:
-    m_sum = "error"
+    m_sum = "the two matrixs are not the same dimensions"
 
   return m_sum
 
@@ -112,8 +114,8 @@ def m_subtraction(m1, m2):
       m_row = []
       for column in range(0, len(m1[row])):
         total = m1[row][column] - m2[row][column]
-        m_row.append[total]
-      m_result.append[m_row]
+        m_row.append(total)
+      m_result.append(m_row)
   else:
     m_result = "error"
 
@@ -133,7 +135,8 @@ def scalar_mult(m1):
 
 
 def m_mult(m1, m2):
-  compatibility = m_mult_check(m1, m2)
+  compatibility = m_mult_check(m1, m2) - 1
+  print(compatibility)
   m_result = []
   if compatibility != 0:
     for row_m1 in m1:
@@ -141,12 +144,23 @@ def m_mult(m1, m2):
       result = 0
       for value in range(0, compatibility):
         result += row_m1[value] * m2[compatibility][0]
-      new_row.append(result)
-    m_result.append(new_row)
+        new_row.append(result)
+      m_result.append(new_row)
   else:
-    m_result = "error"
+    m_result = "the row and columns are not equal"
   return m_result
 
+#match and case is basicly a if statement but less writing, thought to give it a try 
+def check_operations(prompt, m1, m2):
+  match prompt:
+    case "add":
+      return m_addition(m1, m2)
+    case "subtract":
+      return m_subtraction(m1,m2)
+    case "scalar multiplication":
+      return scalar_mult(m1)
+    case "maxtrix multiplication":
+      return m_mult(m1, m2)
 
 rows_m1 = int(input("Please enter in the rows of the first matrix: "))
 columns_m1 = int(input("Please enter in the columns of the first matrix: "))
@@ -159,6 +173,24 @@ columns_m2 = int(input("Please enter in the columns of the first matrix: "))
 m1 = create_matrix(rows_m1, columns_m1)
 m2 = create_matrix(rows_m2, columns_m2)
 
+#ask the uswer for the input and gets ride of the space and captials for the if statements later 
+m_operations = input("Input if you want to add, subtract, scalar multiplication, or maxtrix multiplication the matrices: ").strip().lower()
 
-m_sum = m_addition(m1, m2)
-print_matrix(m_sum)
+m_answer = check_operations(m_operations, m1, m2 )
+
+#print all the martices here 
+print("Here is the first martrix:")
+for row in m1:
+  print(row)
+
+print("Here is the second martrix:")
+for row in m2:
+  print(row)
+
+#if the operation could be done, the function will just return a martix which is just a list, this checks for that. 
+if isinstance(m_answer, list):
+  print(f'The result is: ')
+  for row in m_answer:
+    print(row)
+else:
+  print(f'There is an error, the reason is: {m_answer}')
