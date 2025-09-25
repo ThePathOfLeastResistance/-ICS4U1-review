@@ -45,6 +45,10 @@ https://www.khanacademy.org/math/precalculus/x9e81a4f98389efdf:matrices/x9e81a4f
 
 """
 
+# James Cao
+# Sep 25, 2025
+#Reviewing and learning about matrix operations
+
 from random import randint
 
 
@@ -79,8 +83,13 @@ def m_check_Symmetry(m1, m2):
   else: 
     symmetry = False
   return symmetry
-  
 
+def m_mult_check(m1, m2):
+  factor = 0
+  if len(m1[0]) == len(m2):
+    factor = len(m1[0])
+  return factor
+  
 def m_addition(m1, m2):
   if m_check_Symmetry(m1, m2):
     m_sum = []
@@ -111,12 +120,32 @@ def m_subtraction(m1, m2):
   return m_result
 
 
+
 def scalar_mult(m1):
-  return False
+  scalar = int(input("What do you want to multiply the Matrix by ?"))
+  m_result = []
+  for row in m1:
+    new_row = []
+    for column in row:
+      new_row.append(column * scalar)
+    m_result.append(new_row)
+  return m_result
 
 
 def m_mult(m1, m2):
-  return False
+  compatibility = m_mult_check(m1, m2)
+  m_result = []
+  if compatibility != 0:
+    for row_m1 in m1:
+      new_row = []
+      result = 0
+      for value in range(0, compatibility):
+        result += row_m1[value] * m2[compatibility][0]
+      new_row.append(result)
+    m_result.append(new_row)
+  else:
+    m_result = "error"
+  return m_result
 
 
 rows_m1 = int(input("Please enter in the rows of the first matrix: "))
