@@ -135,16 +135,18 @@ def scalar_mult(m1):
 
 
 def m_mult(m1, m2):
-  compatibility = m_mult_check(m1, m2) - 1
+  compatibility = m_mult_check(m1, m2)
   print(compatibility)
   m_result = []
   if compatibility != 0:
     for row_m1 in m1:
       new_row = []
-      result = 0
-      for value in range(0, compatibility):
-        result += row_m1[value] * m2[compatibility][0]
-        new_row.append(result)
+      
+      for column_m2_value in range(0, len(m2[0])):
+        sum = 0
+        for value in range(0, compatibility):
+          sum += row_m1[value] * m2[value][column_m2_value]
+        new_row.append(sum)
       m_result.append(new_row)
   else:
     m_result = "the row and columns are not equal"
@@ -159,7 +161,8 @@ def check_operations(prompt, m1, m2):
       return m_subtraction(m1,m2)
     case "scalar multiplication":
       return scalar_mult(m1)
-    case "maxtrix multiplication":
+    case "m":
+    # case "maxtrix multiplication":
       return m_mult(m1, m2)
 
 rows_m1 = int(input("Please enter in the rows of the first matrix: "))
