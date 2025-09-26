@@ -63,6 +63,7 @@ def create_matrix(rows, columns):
   return matrix
 
 
+#did not see this functin so did not use it
 def print_matrix(m):
   for i in range(0, len(m)):
     row = ""
@@ -72,8 +73,7 @@ def print_matrix(m):
   print("----------")
 
 
-#adding two valid matrices together
-
+#checking if two matrices are the same size for adding and subtracting
 def m_check_Symmetry(m1, m2):
   symmetry = True 
   if len(m1) == len(m2):
@@ -84,12 +84,14 @@ def m_check_Symmetry(m1, m2):
     symmetry = False
   return symmetry
 
+#check if the columns and rows match for the two given matrices so we can multiply them
 def m_mult_check(m1, m2):
   factor = 0
   if len(m1[0]) == len(m2):
     factor = len(m1[0])
   return factor
   
+#first check if the matrices are the same, then goes through each row and value to add them together
 def m_addition(m1, m2):
   if m_check_Symmetry(m1, m2):
     m_sum = []
@@ -102,11 +104,12 @@ def m_addition(m1, m2):
         m_row.append(total)
       m_sum.append(m_row)
   else:
+    #if the sizes are different return 
     m_sum = "the two matrixs are not the same dimensions"
-
   return m_sum
 
 
+#subtracting matrices
 def m_subtraction(m1, m2):
   if m_check_Symmetry(m1, m2):
     m_result = []
@@ -122,7 +125,7 @@ def m_subtraction(m1, m2):
   return m_result
 
 
-
+#takes the first matrix and multplies by a constant inputed by the user, the output is a matrix or a string stating the error 
 def scalar_mult(m1):
   scalar = int(input("What do you want to multiply the Matrix by ?"))
   m_result = []
@@ -134,9 +137,10 @@ def scalar_mult(m1):
   return m_result
 
 
+#use compatibility function, then does the matrix multiplcation, the result is rather a matrix or a string if there is an erorr
 def m_mult(m1, m2):
   compatibility = m_mult_check(m1, m2)
-  print(compatibility)
+  # print(compatibility)
   m_result = []
   if compatibility != 0:
     for row_m1 in m1:
@@ -152,6 +156,7 @@ def m_mult(m1, m2):
     m_result = "the row and columns are not equal"
   return m_result
 
+#checks what operation the user wants and matches it with the function
 #match and case is basicly a if statement but less writing, thought to give it a try 
 def check_operations(prompt, m1, m2):
   match prompt:
