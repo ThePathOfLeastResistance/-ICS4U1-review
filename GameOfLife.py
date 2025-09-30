@@ -20,7 +20,7 @@ def print_board(board, columnValue):
             if lifeState == 1:
                 listOfLifePrints.append(["000", "000"] )
             else:
-                listOfLifePrints.append(["xxx", "xxx"] )
+                listOfLifePrints.append(["[ ]", "[ ]"] )
         #the * sign unpacks the zip
         # for the list of list, it unpacks the inner list as seperate arguments
     newList = ["   ".join(rowOfText) for rowOfText in zip(*listOfLifePrints)]
@@ -28,10 +28,8 @@ def print_board(board, columnValue):
     print("\n")
     for indexValue in range(0, int(len(listOfLifePrints)/columnValue)):
         print(*newZipList[0][indexValue * columnValue : (indexValue + 1)*columnValue])
-        print(*newZipList[0][indexValue * columnValue : (indexValue + 1)*columnValue])
-        print ("\n")
-        
-    
+        print(*newZipList[1][indexValue * columnValue : (indexValue + 1)*columnValue])        
+        print('\n')
     print(board)
     
     
