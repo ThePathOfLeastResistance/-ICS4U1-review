@@ -46,9 +46,11 @@ def print_board(board, columnValue):
     for indexValue in range(0, int(len(listOfLifePrints)/columnValue)):
         print("  ".join(listOfLifePrints[indexValue * columnValue : (indexValue + 1)*columnValue]))
         print("  ".join(listOfLifePrints[indexValue * columnValue : (indexValue + 1)*columnValue]))
-
-        print('\n')
-    print(board)
+        dashboardDiv = ''
+        n = int(len(listOfLifePrints)/columnValue)
+        dashboardDiv += "----" * (n) + "--" * (n - 1) 
+        print(dashboardDiv)
+        
     
 def populate_board(rowValue, columnValue):
     newBoard = []
