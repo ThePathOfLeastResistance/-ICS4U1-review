@@ -5,8 +5,6 @@
 import os
 import random
 
-
-
 # # Functions are here
 # def print_board(board, columnValue):
 #     os.system('cls' if os.name == 'nt' else 'clear')
@@ -32,38 +30,85 @@ import random
 #         print('\n')
 #     print(board)
 
-# Functions are here
-def print_board(board, columnValue):
-    os.system('cls' if os.name == 'nt' else 'clear')
-    listOfLifePrints = []
-    for row in board:
-        for lifeState in row: 
-            if lifeState == 1:
-                listOfLifePrints.append("0000" )
-            else:
-                listOfLifePrints.append("[  ]")
+class GridClass:
+    def __init__(self, gridOfCells):
+        self.gridOfCells = self.gridOfCells
         
-    for indexValue in range(0, int(len(listOfLifePrints)/columnValue)):
-        print("  ".join(listOfLifePrints[indexValue * columnValue : (indexValue + 1)*columnValue]))
-        print("  ".join(listOfLifePrints[indexValue * columnValue : (indexValue + 1)*columnValue]))
-        dashboardDiv = ''
-        n = int(len(listOfLifePrints)/columnValue)
-        dashboardDiv += "----" * (n) + "--" * (n - 1) 
-        print(dashboardDiv)
+    # Functions are here
+    def Display(board, columnValue):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        listOfLifePrints = []
+        for row in board:
+            for lifeState in row: 
+                listOfLifePrints.append("0000" if lifeState == 1 else "[  ]")
+
+        for indexValue in range(0, int(len(listOfLifePrints)/columnValue)):
+            print("  ".join(listOfLifePrints[indexValue * columnValue : (indexValue + 1)*columnValue]))
+            print("  ".join(listOfLifePrints[indexValue * columnValue : (indexValue + 1)*columnValue]))
+            dashboardDiv = ''
+            n = int(len(listOfLifePrints)/columnValue)
+            dashboardDiv += "----" * (n) + "--" * (n - 1) 
+            print(dashboardDiv)
+            
         
+    def PopulateRandom(self):
+        userRowValue = int(input("Enter a number for the number of rows for the game of life: "))
+        userColumnValue = int(input("Enter a number for the number of column for the game of life: "))
+        newBoard = []
+        for row in range(0, userRowValue):
+            newColumn = []
+            for column in range(0, userColumnValue):
+                newColumn.append(random.randint(0,1))
+            newBoard.append(newColumn)
+        self.gridOfCells = newBoard
     
-def populate_board(rowValue, columnValue):
-    newBoard = []
-    for row in range(0, rowValue):
-        newColumn = []
-        for column in range(0, columnValue):
-            newColumn.append(random.randint(0,1))
-        newBoard.append(newColumn)
-    return newBoard
-
-userRowValue = int(input("Enter a number for the number of rows for the game of life: "))
-userColumnValue = int(input("Enter a number for the number of column for the game of life: "))
-
-boardLayout = populate_board(userRowValue, userColumnValue)
-print(boardLayout)
-print_board(boardLayout, userColumnValue)
+    def NextGeneration(self):
+        for rowIndex in range(0, len(self.gridOfCells)):
+            for columnIndex in range(0, len(self.gridOfCells[[0]])):
+                cell = Cell(neighborCount = 0)
+                self.gridOfCells[rowIndex][columnIndex] = 1 if cell.CheckNeighbours() else 0
+                    
+class Cell:
+    def __init__(self, neighborCount):
+        self.neighboursLayout = [[], [], []]
+        self.neighborCount = neighborCount
+    
+    def FetchNeighbours(self, rowIndex, columnIndex):
+        yIndex = -1 
+        for i in range(yIndex, 1):
+            xIndex = -1
+            for i in range(xIndex, 1):
+                referenceYIndex = rowIndex + yIndex
+                referenceXIndex = columnIndex + xIndex
+                self.neighboursLayout[yIndex+1].append([referenceXIndex, referenceYIndex] if referenceXIndex >= 0 and referenceYIndex >= 0 else [])
+        # return self.neighboursLayout
+    
+    def CheckNeighbours(self, board):
+        self.FetchNeighbours
+        neighbourCount = 0
+        for rowOfIndex in self.neighboursLayout:
+            for columnOfIndex in rowOfIndex:
+                if columnOfIndex == [] or (rowOfIndex == 1 and columnOfIndex == 1):
+                    pass
+                else:
+                    if board[rowOfIndex][columnOfIndex] == 1:
+                        neighbourCount += 1
+        if board[1][1] == 1:
+            if neighbourCount < 2:
+                return False
+            elif neighbourCount == 2 or neighbourCount == 3: 
+                return True
+            elif neighbourCount > 3:
+                return True
+            else:
+                print("Somthing is not right!!")
+        elif board[1][1] == 0:
+            if neighbourCount == 3:
+                return True
+            else: 
+                return False
+            
+            
+loopState = True
+gridOfCells = GridClass()
+gridOfCells.PopulateRandom()
