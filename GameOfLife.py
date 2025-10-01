@@ -74,7 +74,7 @@ class GridClass:
                 cell = Cell()
                 print("the current grid of cells")
                 print(self.gridOfCells)
-                self.gridOfCells[rowIndex][columnIndex] = 1 if cell.CheckNeighbours(self.gridOfCells) else 0
+                self.gridOfCells[rowIndex][columnIndex] = 1 if cell.CheckNeighbours(self.gridOfCells, rowIndex, columnIndex) else 0
                 print("the NEW grid of cells")
                 print(self.gridOfCells)
 
@@ -94,16 +94,24 @@ class Cell:
                 self.neighboursLayout[yIndex+1].append([referenceXIndex, referenceYIndex] if referenceXIndex >= 0 and referenceYIndex >= 0 else [])
         # return self.neighboursLayout
     
-    def CheckNeighbours(self, board):
-        self.FetchNeighbours
+    def CheckNeighbours(self, board, rowIndex, columnIndex):
+        self.FetchNeighbours(rowIndex, columnIndex)
+        # print("Printint the neighour layouts")
+        # print(self.neighboursLayout)
         neighbourCount = 0
-        for rowOfIndex in self.neighboursLayout:
-            for columnOfIndex in rowOfIndex:
+        for rowOfIndex in range(0, len(self.neighboursLayout) - 1):
+            print(columnIndex)
+            print("here is the columnIndex")
+            for columnOfIndex in range(0, len(self.neighboursLayout[rowOfIndex]) - 1):
                 if columnOfIndex == [] or (rowOfIndex == 1 and columnOfIndex == 1):
                     pass
                 else:
+                    # print(rowOfIndex)
+                    # print(columnOfIndex) 
                     if board[rowOfIndex][columnOfIndex] == 1:
                         neighbourCount += 1
+        # print("the estimated NeighbourCount")
+        # print(self.neighborCount)
         if board[1][1] == 1:
             if neighbourCount < 2:
                 return False
@@ -127,8 +135,8 @@ gridOfCells.PopulateRandom()
 while loopState:
     print("showing the display")
     gridOfCells.Display()
-    print("find the nextgeneration")
+    # print("find the nextgeneration")
     gridOfCells.NextGeneration()
-    print("going to sleep")
-    time.sleep(1)
+    # print("going to sleep")
+    time.sleep(5)
     # os.system('cls' if os.name == 'nt' else 'clear')
