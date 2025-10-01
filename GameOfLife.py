@@ -4,7 +4,7 @@
 
 import os
 import random
-
+import time 
 # # Functions are here
 # def print_board(board, columnValue):
 #     os.system('cls' if os.name == 'nt' else 'clear')
@@ -31,13 +31,15 @@ import random
 #     print(board)
 
 class GridClass:
-    def __init__(self, gridOfCells):
-        self.gridOfCells = self.gridOfCells
+    def __init__(self):
+        self.gridOfCells = [[], [],[]]
         
     # Functions are here
-    def Display(board, columnValue):
-        os.system('cls' if os.name == 'nt' else 'clear')
+    def Display(self):
+        board = self.gridOfCells
+        # os.system('cls' if os.name == 'nt' else 'clear')
         listOfLifePrints = []
+        columnValue = len(board[0])
         for row in board:
             for lifeState in row: 
                 listOfLifePrints.append("0000" if lifeState == 1 else "[  ]")
@@ -60,18 +62,27 @@ class GridClass:
             for column in range(0, userColumnValue):
                 newColumn.append(random.randint(0,1))
             newBoard.append(newColumn)
+        print("the NEW BOARD")
+        print(newBoard)
         self.gridOfCells = newBoard
-    
+        print("the New grid of Cells")
+        print(self.gridOfCells)
+
     def NextGeneration(self):
         for rowIndex in range(0, len(self.gridOfCells)):
-            for columnIndex in range(0, len(self.gridOfCells[[0]])):
-                cell = Cell(neighborCount = 0)
-                self.gridOfCells[rowIndex][columnIndex] = 1 if cell.CheckNeighbours() else 0
+            for columnIndex in range(0, len(self.gridOfCells[0])):
+                cell = Cell()
+                print("the current grid of cells")
+                print(self.gridOfCells)
+                self.gridOfCells[rowIndex][columnIndex] = 1 if cell.CheckNeighbours(self.gridOfCells) else 0
+                print("the NEW grid of cells")
+                print(self.gridOfCells)
+
                     
 class Cell:
-    def __init__(self, neighborCount):
+    def __init__(self):
         self.neighboursLayout = [[], [], []]
-        self.neighborCount = neighborCount
+        self.neighborCount = 0
     
     def FetchNeighbours(self, rowIndex, columnIndex):
         yIndex = -1 
@@ -112,3 +123,12 @@ class Cell:
 loopState = True
 gridOfCells = GridClass()
 gridOfCells.PopulateRandom()
+
+while loopState:
+    print("showing the display")
+    gridOfCells.Display()
+    print("find the nextgeneration")
+    gridOfCells.NextGeneration()
+    print("going to sleep")
+    time.sleep(1)
+    # os.system('cls' if os.name == 'nt' else 'clear')
