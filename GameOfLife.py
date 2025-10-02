@@ -81,17 +81,17 @@ class GridClass:
                     
 class Cell:
     def __init__(self):
-        self.neighboursLayout = [[], [], []]
+        self.neighboursLayout = [[[],[],[]], [[],[],[]], [[],[],[]]]
         self.neighborCount = 0
     
     def FetchNeighbours(self, rowIndex, columnIndex):
-        yIndex = -1 
-        for i in range(yIndex, 1):
-            xIndex = -1
-            for i in range(xIndex, 1):
+        for yIndex in range(-1, 1):
+            for xIndex in range(-1, 1):
                 referenceYIndex = rowIndex + yIndex
                 referenceXIndex = columnIndex + xIndex
-                self.neighboursLayout[yIndex+1].append([referenceXIndex, referenceYIndex] if referenceXIndex >= 0 and referenceYIndex >= 0 else [])
+                self.neighboursLayout[yIndex+1][xIndex + 1] = [referenceXIndex, referenceYIndex] if referenceXIndex >= 0 and referenceYIndex >= 0 else []
+                print("neighbour LAYOUT")
+                print(self.neighboursLayout)
         # return self.neighboursLayout
     
     def CheckNeighbours(self, board, rowIndex, columnIndex):
@@ -100,10 +100,10 @@ class Cell:
         # print(self.neighboursLayout)
         neighbourCount = 0
         for rowOfIndex in range(0, len(self.neighboursLayout) - 1):
-            print(columnIndex)
-            print("here is the columnIndex")
+            # print(columnIndex)
+            # print("here is the columnIndex")
             for columnOfIndex in range(0, len(self.neighboursLayout[rowOfIndex]) - 1):
-                if columnOfIndex == [] or (rowOfIndex == 1 and columnOfIndex == 1):
+                if self.neighboursLayout[rowOfIndex][columnOfIndex] == [] or (rowOfIndex == 1 and columnOfIndex == 1):
                     pass
                 else:
                     # print(rowOfIndex)
@@ -112,19 +112,26 @@ class Cell:
                         neighbourCount += 1
         # print("the estimated NeighbourCount")
         # print(self.neighborCount)
+        print(neighbourCount)
         if board[1][1] == 1:
             if neighbourCount < 2:
+                print("false 1")
                 return False
             elif neighbourCount == 2 or neighbourCount == 3: 
+                print("True 2") 
                 return True
+                
             elif neighbourCount > 3:
+                print('true 3 ') 
                 return True
             else:
                 print("Somthing is not right!!")
         elif board[1][1] == 0:
             if neighbourCount == 3:
+                print("true 4") 
                 return True
-            else: 
+            else:
+                print("false 5") 
                 return False
             
             
