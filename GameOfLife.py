@@ -2,6 +2,9 @@
 # Sep 29, 2025
 # The game of life simulation in Python 
 
+
+#test tes ttes
+
 import os
 import random
 import time 
