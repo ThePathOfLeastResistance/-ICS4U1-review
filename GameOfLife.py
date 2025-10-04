@@ -82,37 +82,41 @@ class GridClass:
 class Cell:
     def __init__(self):
         self.neighboursLayout = [[[],[],[]], [[],[],[]], [[],[],[]]]
-        self.neighborCount = 0
     
     def FetchNeighbours(self, rowIndex, columnIndex):
-        for yIndex in range(-1, 1):
-            for xIndex in range(-1, 1):
+        for yIndex in range(-1, 2):
+            for xIndex in range(-1, 2):
                 referenceYIndex = rowIndex + yIndex
                 referenceXIndex = columnIndex + xIndex
-                self.neighboursLayout[yIndex+1][xIndex + 1] = [referenceXIndex, referenceYIndex] if referenceXIndex >= 0 and referenceYIndex >= 0 else []
+                self.neighboursLayout[yIndex+1][xIndex + 1] = [referenceXIndex, referenceYIndex] if (referenceXIndex >= 0 and referenceYIndex >= 0) and (yIndex != 1 and xIndex != 1) else []
                 print("neighbour LAYOUT")
                 print(self.neighboursLayout)
         # return self.neighboursLayout
     
     def CheckNeighbours(self, board, rowIndex, columnIndex):
+        #This function could be condensed
         self.FetchNeighbours(rowIndex, columnIndex)
         # print("Printint the neighour layouts")
-        # print(self.neighboursLayout)
         neighbourCount = 0
-        for rowOfIndex in range(0, len(self.neighboursLayout) - 1):
-            # print(columnIndex)
-            # print("here is the columnIndex")
-            for columnOfIndex in range(0, len(self.neighboursLayout[rowOfIndex]) - 1):
-                if self.neighboursLayout[rowOfIndex][columnOfIndex] == [] or (rowOfIndex == 1 and columnOfIndex == 1):
+        for row in self.neighboursLayout:
+            for column in row:
+                if column == []:
                     pass
                 else:
-                    # print(rowOfIndex)
-                    # print(columnOfIndex) 
-                    if board[rowOfIndex][columnOfIndex] == 1:
-                        neighbourCount += 1
-        # print("the estimated NeighbourCount")
+                    neighbourCount += 1 
+        # for rowOfIndex in range(0, len(self.neighboursLayout)):
+        #     # print(columnIndex)
+        #     # print("here is the columnIndex")
+        #     for columnOfIndex in range(0, len(self.neighboursLayout[rowOfIndex])):
+        #         if self.neighboursLayout[rowOfIndex][columnOfIndex] == [] or (rowOfIndex == 1 and columnOfIndex == 1):
+        #             pass
+        #         else:
+        #             # print(rowOfIndex)
+        #             # print(columnOfIndex) 
+        #             if board[rowOfIndex][columnOfIndex] == 1:
+        #                 neighbourCount += 1
+        #  print("the estimated NeighbourCount")
         # print(self.neighborCount)
-        print(neighbourCount)
         if board[1][1] == 1:
             if neighbourCount < 2:
                 print("false 1")
