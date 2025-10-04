@@ -62,21 +62,21 @@ class GridClass:
             for column in range(0, userColumnValue):
                 newColumn.append(random.randint(0,1))
             newBoard.append(newColumn)
-        print("the NEW BOARD")
-        print(newBoard)
+        # print("the NEW BOARD")
+        # print(newBoard)
         self.gridOfCells = newBoard
-        print("the New grid of Cells")
-        print(self.gridOfCells)
+        # print("the New grid of Cells")
+        # print(self.gridOfCells)
 
     def NextGeneration(self):
         for rowIndex in range(0, len(self.gridOfCells)):
             for columnIndex in range(0, len(self.gridOfCells[0])):
                 cell = Cell()
-                print("the current grid of cells")
-                print(self.gridOfCells)
+                # print("the current grid of cells")
+                # print(self.gridOfCells)
                 self.gridOfCells[rowIndex][columnIndex] = 1 if cell.CheckNeighbours(self.gridOfCells, rowIndex, columnIndex) else 0
-                print("the NEW grid of cells")
-                print(self.gridOfCells)
+                # print("the NEW grid of cells")
+                # print(self.gridOfCells)
 
                     
 class Cell:
@@ -89,8 +89,8 @@ class Cell:
                 referenceYIndex = rowIndex + yIndex
                 referenceXIndex = columnIndex + xIndex
                 self.neighboursLayout[yIndex+1][xIndex + 1] = [referenceXIndex, referenceYIndex] if (referenceXIndex >= 0 and referenceYIndex >= 0) and (yIndex != 1 and xIndex != 1) else []
-                print("neighbour LAYOUT")
-                print(self.neighboursLayout)
+                # print("neighbour LAYOUT")
+                # print(self.neighboursLayout)
         # return self.neighboursLayout
     
     def CheckNeighbours(self, board, rowIndex, columnIndex):
@@ -100,6 +100,7 @@ class Cell:
         neighbourCount = 0
         for row in self.neighboursLayout:
             for column in row:
+                print(column)
                 if column == []:
                     pass
                 else:
@@ -117,7 +118,8 @@ class Cell:
         #                 neighbourCount += 1
         #  print("the estimated NeighbourCount")
         # print(self.neighborCount)
-        if board[1][1] == 1:
+        print(neighbourCount)
+        if board[rowIndex][columnIndex] == 1:
             if neighbourCount < 2:
                 print("false 1")
                 return False
@@ -126,8 +128,8 @@ class Cell:
                 return True
                 
             elif neighbourCount > 3:
-                print('true 3 ') 
-                return True
+                print('False 3 ') 
+                return False
             else:
                 print("Somthing is not right!!")
         elif board[1][1] == 0:
