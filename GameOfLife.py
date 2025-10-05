@@ -92,8 +92,7 @@ generation = 0
 while loopState:
     generation += 1
     print(f'generation: {generation}')
-    print("showing the display")
     Grid.Display()
     Grid.NextGeneration()
     input("")
-    # os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
