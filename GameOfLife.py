@@ -72,12 +72,13 @@ class GridClass:
         # print(self.gridOfCells)
 
     def NextGeneration(self):
+        boardIndex = self.gridOfCells
         for rowIndex in range(0, len(self.gridOfCells)):
             for columnIndex in range(0, len(self.gridOfCells[0])):
                 cell = Cell()
                 # print("the current grid of cells")
                 # print(self.gridOfCells)
-                self.gridOfCells[rowIndex][columnIndex] = 1 if cell.CheckNeighbours(self.gridOfCells, rowIndex, columnIndex) else 0
+                self.gridOfCells[rowIndex][columnIndex] = 1 if cell.CheckNeighbours(boardIndex, rowIndex, columnIndex) else 0
                 # print("the NEW grid of cells")
                 # print(self.gridOfCells)
 
@@ -86,27 +87,29 @@ class Cell:
     def __init__(self):
         self.neighboursLayout = [[[],[],[]], [[],[],[]], [[],[],[]]]
     
-    def FetchNeighbours(self, rowIndex, columnIndex):
+    def FetchNeighbours(self, board, rowIndex, columnIndex):
         for yIndex in range(-1, 2):
             for xIndex in range(-1, 2):
                 referenceYIndex = rowIndex + yIndex
                 referenceXIndex = columnIndex + xIndex
-                self.neighboursLayout[yIndex+1][xIndex + 1] = [referenceXIndex, referenceYIndex] if (referenceXIndex >= 0 and referenceYIndex >= 0) and (yIndex != 1 and xIndex != 1) else []
+                print(referenceYIndex)
+                print(referenceXIndex)
+                if 0 <= referenceXIndex < len(board[0]) and 0<= referenceYIndex < len(board) and not (referenceXIndex == 0 and referenceYIndex == 0):
+                    self.neighboursLayout[referenceYIndex-1][referenceXIndex-1] = True if board[referenceYIndex][referenceXIndex] == 1 else []
                 # print("neighbour LAYOUT")
                 # print(self.neighboursLayout)
+            print(self.neighboursLayout)
         # return self.neighboursLayout
     
-    def CheckNeighbours(self, board, rowIndex, columnIndex):
+    def CheckNeighbours(self, boardIndex, rowIndex, columnIndex):
         #This function could be condensed
-        self.FetchNeighbours(rowIndex, columnIndex)
+        self.FetchNeighbours(boardIndex, rowIndex, columnIndex)
         # print("Printint the neighour layouts")
         neighbourCount = 0
         for row in self.neighboursLayout:
             for column in row:
-                print(column)
-                if column == []:
-                    pass
-                else:
+                # print(column)
+                if column:
                     neighbourCount += 1 
         # for rowOfIndex in range(0, len(self.neighboursLayout)):
         #     # print(columnIndex)
@@ -122,7 +125,9 @@ class Cell:
         #  print("the estimated NeighbourCount")
         # print(self.neighborCount)
         print(neighbourCount)
-        if board[rowIndex][columnIndex] == 1:
+        print(boardIndex
+              )
+        if boardIndex[rowIndex][columnIndex] == 1:
             if neighbourCount < 2:
                 print("false 1")
                 return False
@@ -135,7 +140,7 @@ class Cell:
                 return False
             else:
                 print("Somthing is not right!!")
-        elif board[1][1] == 0:
+        elif boardIndex[rowIndex][columnIndex] == 0:
             if neighbourCount == 3:
                 print("true 4") 
                 return True
@@ -147,12 +152,15 @@ class Cell:
 loopState = True
 gridOfCells = GridClass()
 gridOfCells.PopulateRandom()
+generation = 0 
 
 while loopState:
+    generation += 1
+    print(f'generation: {generation}')
     print("showing the display")
     gridOfCells.Display()
     # print("find the nextgeneration")
     gridOfCells.NextGeneration()
     # print("going to sleep")
-    time.sleep(5)
+    input("")
     # os.system('cls' if os.name == 'nt' else 'clear')
