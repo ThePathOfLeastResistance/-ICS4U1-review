@@ -41,6 +41,7 @@ class GridClass:
     def Display(self):
         board = self.gridOfCells
         # os.system('cls' if os.name == 'nt' else 'clear')
+        print(self.gridOfCells)
         listOfLifePrints = []
         columnValue = len(board[0])
         for row in board:
@@ -71,8 +72,7 @@ class GridClass:
         # print("the New grid of Cells")
         # print(self.gridOfCells)
 
-    def NextGeneration(self):
-        boardIndex = self.gridOfCells
+    def NextGeneration(self, boardIndex):
         for rowIndex in range(0, len(self.gridOfCells)):
             for columnIndex in range(0, len(self.gridOfCells[0])):
                 cell = Cell()
@@ -87,46 +87,29 @@ class Cell:
     def __init__(self):
         self.neighboursLayout = [[[],[],[]], [[],[],[]], [[],[],[]]]
     
-    def FetchNeighbours(self, board, rowIndex, columnIndex):
+    def CheckNeighbours(self, boardIndex, rowIndex, columnIndex):
+        print("____________________") 
+        neighbourCount = 0
         for yIndex in range(-1, 2):
             for xIndex in range(-1, 2):
                 referenceYIndex = rowIndex + yIndex
                 referenceXIndex = columnIndex + xIndex
-                print(referenceYIndex)
-                print(referenceXIndex)
-                if 0 <= referenceXIndex < len(board[0]) and 0<= referenceYIndex < len(board) and not (referenceXIndex == 0 and referenceYIndex == 0):
-                    self.neighboursLayout[referenceYIndex-1][referenceXIndex-1] = True if board[referenceYIndex][referenceXIndex] == 1 else []
-                # print("neighbour LAYOUT")
-                # print(self.neighboursLayout)
-            print(self.neighboursLayout)
-        # return self.neighboursLayout
-    
-    def CheckNeighbours(self, boardIndex, rowIndex, columnIndex):
-        #This function could be condensed
-        self.FetchNeighbours(boardIndex, rowIndex, columnIndex)
-        # print("Printint the neighour layouts")
-        neighbourCount = 0
-        for row in self.neighboursLayout:
-            for column in row:
-                # print(column)
-                if column:
-                    neighbourCount += 1 
-        # for rowOfIndex in range(0, len(self.neighboursLayout)):
-        #     # print(columnIndex)
-        #     # print("here is the columnIndex")
-        #     for columnOfIndex in range(0, len(self.neighboursLayout[rowOfIndex])):
-        #         if self.neighboursLayout[rowOfIndex][columnOfIndex] == [] or (rowOfIndex == 1 and columnOfIndex == 1):
-        #             pass
-        #         else:
-        #             # print(rowOfIndex)
-        #             # print(columnOfIndex) 
-        #             if board[rowOfIndex][columnOfIndex] == 1:
-        #                 neighbourCount += 1
-        #  print("the estimated NeighbourCount")
-        # print(self.neighborCount)
+               
+                if 0 <= referenceXIndex < len(boardIndex[0]) and 0<= referenceYIndex < len(boardIndex) and not (yIndex == 0 and xIndex == 0):
+                    print('pass NUmber ONe')
+                    print("ReferenceYIndex")
+                    print(referenceYIndex)
+                    print("ReferenceXIndex")
+                    print(referenceXIndex)
+                    print(yIndex, xIndex)
+                    print(rowIndex, columnIndex)
+                    print(boardIndex)
+                    if boardIndex[referenceYIndex][referenceXIndex] == 1:
+                        print('added Neighbour')
+                        neighbourCount += 1
+
+        print("neighbourCOUnt")    
         print(neighbourCount)
-        print(boardIndex
-              )
         if boardIndex[rowIndex][columnIndex] == 1:
             if neighbourCount < 2:
                 print("false 1")
@@ -150,17 +133,18 @@ class Cell:
             
             
 loopState = True
-gridOfCells = GridClass()
-gridOfCells.PopulateRandom()
+Grid = GridClass()
+Grid.PopulateRandom()
 generation = 0 
 
 while loopState:
     generation += 1
     print(f'generation: {generation}')
     print("showing the display")
-    gridOfCells.Display()
+    Grid.Display()
     # print("find the nextgeneration")
-    gridOfCells.NextGeneration()
+    boardIndex = Grid.gridOfCells
+    Grid.NextGeneration(boardIndex)
     # print("going to sleep")
     input("")
     # os.system('cls' if os.name == 'nt' else 'clear')
