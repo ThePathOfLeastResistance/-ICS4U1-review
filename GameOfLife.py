@@ -7,6 +7,7 @@
 import os
 import random
 import time 
+import copy
 class GridClass:
     def __init__(self):
         self.gridOfCells = [[], [],[]]
@@ -42,7 +43,9 @@ class GridClass:
             newBoard.append(newColumn)
         self.gridOfCells = newBoard
 
-    def NextGeneration(self, boardIndex):
+    def NextGeneration(self):
+        boardIndex = copy.deepcopy(self.gridOfCells)
+        # boardIndex = self.gridOfCells, does not amke a copy, but instead creates a new reference to it, so each tho it is out of the loop, when the checkneighbour function is ran, it will reference the the newly changed grid of cells
         for rowIndex in range(0, len(self.gridOfCells)):
             for columnIndex in range(0, len(self.gridOfCells[0])):
                 cell = Cell()
@@ -54,7 +57,6 @@ class Cell:
         self.neighboursLayout = [[[],[],[]], [[],[],[]], [[],[],[]]]
     
     def CheckNeighbours(self, boardIndex, rowIndex, columnIndex):
-        print("____________________") 
         neighbourCount = 0
         for yIndex in range(-1, 2):
             for xIndex in range(-1, 2):
@@ -63,7 +65,6 @@ class Cell:
                
                 if 0 <= referenceXIndex < len(boardIndex[0]) and 0<= referenceYIndex < len(boardIndex) and not (yIndex == 0 and xIndex == 0):
                     if boardIndex[referenceYIndex][referenceXIndex] == 1:
-                        print('added Neighbour')
                         neighbourCount += 1
 
         if boardIndex[rowIndex][columnIndex] == 1:
@@ -93,9 +94,6 @@ while loopState:
     print(f'generation: {generation}')
     print("showing the display")
     Grid.Display()
-    # print("find the nextgeneration")
-    boardIndex = Grid.gridOfCells
-    Grid.NextGeneration(boardIndex)
-    # print("going to sleep")
+    Grid.NextGeneration()
     input("")
     # os.system('cls' if os.name == 'nt' else 'clear')
